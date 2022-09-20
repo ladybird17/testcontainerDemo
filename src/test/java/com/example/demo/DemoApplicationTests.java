@@ -16,11 +16,7 @@ class DemoApplicationTests {
 
 	@Container
 	static PostgreSQLContainer container
-			= new PostgreSQLContainer<>()
-			.withDatabaseName("study")
-			.withUsername("yejin")
-			.withPassword("1234")
-			.withInitScript("db/001_INIT.sql");
+			= UnitedTestContainer.getInstance();
 
 	@Autowired
 	private BookRepository bookRepository;
@@ -35,11 +31,12 @@ class DemoApplicationTests {
 	@Test
 	void contextLoads() {
 		Book book = new Book();
-		book.setName("Testcontainers");
+		book.setName("Pride and Prejudice");
 
 		bookRepository.save(book);
 
 		System.out.println("Context loads!");
+		System.out.println(bookRepository.findById(book.getId()).get().getName());
 	}
 
 }
